@@ -47,7 +47,7 @@ def run_app():
         df_combined = pd.concat([df[['MSISDN_ENCR_INT']], df_scaled], axis=1)
 
         # Predict the cluster ID using a pre-trained Decision Tree model
-        dt_model = joblib.load('model/dt_cluster_model.pkl')
+        dt_model = joblib.load('models/dt_cluster_model.pkl')
         predicted_clusters = dt_model.predict(df_combined[['AON', 'LM_ARPU']])
         df_combined['CLUSTER'] = predicted_clusters
 
@@ -67,7 +67,7 @@ def run_app():
             df_clus = df_combined[df_combined['CLUSTER'] == i].drop(columns=['AON', 'LM_ARPU'])
 
             # Construct the model filename dynamically based on the cluster number
-            model_file = f'model/seg_model_c{i}.pkl'
+            model_file = f'models/seg_model_c{i}.pkl'
 
             # Load the model for the current cluster
             loaded_model = joblib.load(model_file)
