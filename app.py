@@ -147,6 +147,9 @@ def run_app():
         # Combine the selected samples into one DataFrame
         final_samples = pd.concat([churn_samples, non_churn_samples])
 
+        # Shuffle the combined DataFrame
+        final_samples = final_samples.sample(frac=1).reset_index(drop=True)
+
         st.write("### Predictions:")
         st.write(final_samples.head())
 
