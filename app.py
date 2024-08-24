@@ -148,7 +148,7 @@ def run_app():
         final_samples = pd.concat([churn_samples, non_churn_samples])
 
         st.write("### Predictions:")
-        st.write(final_samples.head())
+        st.write(final_samples)
 
         # Download the result as a CSV file
         st.download_button(
