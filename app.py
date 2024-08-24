@@ -54,6 +54,7 @@ def run_app():
         # Prepare df_final with a copy of the original df
         df_final = df.copy()
         df_final['CLUSTER'] = pd.NA
+        df_final['PRED_PROB'] = pd.NA
         df_final['PREDICTION'] = pd.NA
 
         df_final.loc[df_final['MSISDN_ENCR_INT'].isin(df_combined['MSISDN_ENCR_INT']), 'CLUSTER'] = predicted_clusters
@@ -72,10 +73,14 @@ def run_app():
             # Load the model for the current cluster
             loaded_model = joblib.load(model_file)
 
-            # Make predictions on the test set
-            y_pred = loaded_model.predict(df_clus.drop(columns='MSISDN_ENCR_INT'))
+            # Calculate prediction probabilities
+            y_prob = loaded_model.predict_proba(df_clus.drop(columns='MSISDN_ENCR_INT'))[:, 1]
+
+            # Derive predictions from probabilities
+            y_pred = (y_prob >= 0.5).astype(int)
 
             # Assign predictions to the corresponding rows in df_final
+            df_final.loc[df_final['MSISDN_ENCR_INT'].isin(df_clus['MSISDN_ENCR_INT']), 'PRED_PROB'] = y_prob
             df_final.loc[df_final['MSISDN_ENCR_INT'].isin(df_clus['MSISDN_ENCR_INT']), 'PREDICTION'] = y_pred
 
         df_down = df_final[['MSISDN_ENCR_INT', 'CLUSTER', 'PREDICTION']]
