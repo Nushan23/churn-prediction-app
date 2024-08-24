@@ -19,7 +19,7 @@ def cap_outliers(df, whisker_width=1.5):
 
 # Streamlit app code
 def run_app():
-    st.title('Churn Prediction App')
+    st.markdown("<h1 style='text-align: center;'>Churn Prediction App</h1>", unsafe_allow_html=True)
 
     # File uploader
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
