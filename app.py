@@ -83,7 +83,7 @@ def run_app():
             df_final.loc[df_final['MSISDN_ENCR_INT'].isin(df_clus['MSISDN_ENCR_INT']), 'PRED_PROB'] = y_prob
             df_final.loc[df_final['MSISDN_ENCR_INT'].isin(df_clus['MSISDN_ENCR_INT']), 'PREDICTION'] = y_pred
 
-        df_down = df_final[['MSISDN_ENCR_INT', 'CLUSTER', 'PREDICTION']]
+        df_down = df_final[['MSISDN_ENCR_INT', 'CLUSTER', 'PRED_PROB', 'PREDICTION']]
 
         # Calculate the required counts
         input_count = len(uploaded_df)
