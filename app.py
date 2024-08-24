@@ -140,8 +140,15 @@ def run_app():
           ax2.set_title("Cluster wise Churn Rate")
           st.pyplot(fig2)
 
+        # Selecting specific samples for final output
+        churn_samples = df_down[(df_down['PREDICTION'] == 1) & (df_down['PREDICTION_PROB'].between(0.55, 0.85))].sample(2)
+        non_churn_samples = df_down[(df_down['PREDICTION'] == 0) & (df_down['PREDICTION_PROB'].between(0.15, 0.35))].sample(3)
+
+        # Combine the selected samples into one DataFrame
+        final_samples = pd.concat([churn_samples, non_churn_samples])
+
         st.write("### Predictions:")
-        st.write(df_down.head())
+        st.write(final_samples.head())
 
         # Download the result as a CSV file
         st.download_button(
