@@ -134,7 +134,7 @@ def run_app():
         with col2:
           st.write("#### Cluster wise Churn Rate")
           fig2, ax2 = plt.subplots()
-          ax2.bar(churn_rate.index, churn_rate.values)
+          ax2.bar(churn_rate.index.astype(int), churn_rate.values)
           ax2.set_xlabel("Cluster")
           ax2.set_ylabel("Churn Rate")
           ax2.set_title("Cluster wise Churn Rate")
